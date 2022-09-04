@@ -35,4 +35,12 @@ app.MapGet("api/v1/commands", async (ICommandRepo repo, IMapper mapper) =>
     return Results.Ok(mapper.Map<IEnumerable<CommandReadDto>>(commands));
 });
 
+app.MapGet("api/v1/commands/{id}", async (ICommandRepo repo, IMapper mapper, int id) =>
+{
+    var commands = await repo.GetCommandById(id);
+    if (commands != null)
+        return Results.Ok(mapper.Map<CommandReadDto>(commands)); // Source -> Target
+    return Results.NotFound();
+});
+
 app.Run();
