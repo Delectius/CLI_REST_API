@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CLI_REST_API.Dtos
 {
-    public class CommandReadDtos
+    public class CommandReadDto
     {
         public int Id { get; set; }
         public string? Description { get; set; }
