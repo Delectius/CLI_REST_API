@@ -1,6 +1,7 @@
 using AutoMapper;
 using CLI_REST_API.Data;
 using CLI_REST_API.Dtos;
+using CLI_REST_API.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,8 +40,20 @@ app.MapGet("api/v1/commands/{id}", async (ICommandRepo repo, IMapper mapper, int
 {
     var commands = await repo.GetCommandById(id);
     if (commands != null)
-        return Results.Ok(mapper.Map<CommandReadDto>(commands)); // Source -> Target
+        return Results.Ok(mapper.Map<CommandReadDto>(commands)); // Source(commands) -> Target
     return Results.NotFound();
+});
+
+app.MapPost("api/v1/commands", async (ICommandRepo repo, IMapper mapper, CommandCreateDto cmdCreateDto) =>
+{
+    var commandModel = mapper.Map<Command>(cmdCreateDto);
+
+    await repo.CreateCommand(commandModel);
+    await repo.SaveChanges(); // Need to save changes to get flushed in, because there is change to the database
+
+    var cmdReadDto = mapper.Map<CommandReadDto>(commandModel);
+
+    return Results.Created($"api/v1/commands/{cmdReadDto.Id}", cmdReadDto);
 });
 
 app.Run();
