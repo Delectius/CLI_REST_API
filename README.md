@@ -1,7 +1,7 @@
 # CLI_REST_API
 The site is deployed at: https://rk-api.azurewebsites.net/swagger/index.html
 # Description
-A minimal rest api that I made with .Net 06 using the entity framework core.
+A minimal REST API made with .Net 06 using the Entity Framework Core, with C# that stores command line snippets with their descriptions.
 # Demo
 ![image](https://user-images.githubusercontent.com/54373272/188784068-51e327d9-3c21-4b07-bde0-8504f6668b1f.png)
 All possible endpoints that are automatically documented by openAPI.
